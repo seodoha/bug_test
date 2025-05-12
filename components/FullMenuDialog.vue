@@ -2,7 +2,7 @@
   <v-dialog :value="dialog" fullscreen persistent content-class="fullscreen-dialog" @input="$emit('update:dialog', $event)">
     <template #default>
       <v-slide-x-reverse-transition>
-        <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
+        <v-card v-if="dialog" class="pa-0 d-flex flex-column" style="height: 100vh;">
           <v-toolbar flat color="white">
             <v-btn icon @click="$emit('update:dialog', false)">
               <v-icon>mdi-close</v-icon>
@@ -31,11 +31,11 @@
               </v-tabs>
             </div>
           </div>
-          <v-card-text style="padding: 0;">
-            <v-container fluid>
-              <v-row class="white">
-                <v-col cols="12">
-                  <v-list>
+          <v-card-text class="flex-grow-1" style="padding: 0; overflow-y: auto;">
+            <v-container fluid class="pa-0">
+              <v-row class="white ma-0">
+                <v-col cols="12" class="pa-0">
+                  <v-list class="pa-0">
                     <v-list-item>
                       <v-list-item-title class="font-weight-bold">쇼핑 <span style="font-size:12px;">HOME</span></v-list-item-title>
                     </v-list-item>
