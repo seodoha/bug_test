@@ -134,9 +134,9 @@ export default {
   background-color: white;
 }
 
-:deep(.v-dialog--fullscreen) {
+/* :deep(.v-dialog--fullscreen) {
   overflow: hidden;
-}
+} */
 
 :deep(.v-card) {
   overflow-y: auto;
