@@ -133,8 +133,6 @@ export default {
 
 :deep(.fullscreen-dialog) {
   background-color: white;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 :deep(.v-dialog--fullscreen) {
@@ -143,5 +141,7 @@ export default {
 
 :deep(.v-card) {
   height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style> 
