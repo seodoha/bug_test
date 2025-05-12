@@ -1,8 +1,8 @@
 <template>
-  <v-dialog :model-value="props.dialog" fullscreen persistent @update:model-value="$emit('update:dialog', $event)">
+  <v-dialog :value="dialog" fullscreen persistent @input="$emit('update:dialog', $event)">
     <template #default>
-      <v-slide-x-transition>
-        <v-card v-if="props.dialog" class="pa-0" style="height: 100vh;">
+      <v-slide-x-reverse-transition>
+        <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
           <v-toolbar flat color="white">
             <v-btn icon @click="$emit('update:dialog', false)">
               <v-icon>mdi-close</v-icon>
@@ -18,11 +18,11 @@
                 placeholder="찾으시는 브랜드를 입력해주세요."
                 variant="underlined"
                 hide-details
-                density="compact"
-                append-inner-icon="mdi-magnify"
+                dense
+                append-icon="mdi-magnify"
                 class="search-bar w-100"
                 style="font-size:16px;padding:10px;"
-                @click:append-inner="onSearch"
+                @click:append="onSearch"
               />
             </div>
             <div class="sticky-menu">
@@ -39,16 +39,16 @@
                     <v-list-item>
                       <v-list-item-title class="font-weight-bold">쇼핑 <span style="font-size:12px;">HOME</span></v-list-item-title>
                     </v-list-item>
-                    <v-list-item v-for="item in props.shoppingMenu" :key="item.text">
+                    <v-list-item v-for="item in shoppingMenu" :key="item.text">
                       <v-list-item-title>{{ item.text }} <span v-if="item.badge" class="ml-1" style="color: #1976d2; font-size:10px;">•</span></v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-title class="font-weight-bold mt-4">콘텐츠 <span style="font-size:12px;">HOME</span></v-list-item-title>
                     </v-list-item>
-                    <v-list-item v-for="item in props.contentMenu" :key="item.text">
+                    <v-list-item v-for="item in contentMenu" :key="item.text">
                       <v-list-item-title>
                         {{ item.text }}
-                        <v-chip v-if="item.chip" color="red" text-color="white" size="x-small" class="ml-1">LIVE</v-chip>
+                        <v-chip v-if="item.chip" color="red" text-color="white" small class="ml-1">LIVE</v-chip>
                       </v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -57,58 +57,63 @@
             </v-container>
           </v-card-text>
         </v-card>
-      </v-slide-x-transition>
+      </v-slide-x-reverse-transition>
     </template>
   </v-dialog>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import type { VTextField } from 'vuetify/components'
-
-interface ShoppingMenuItem {
-  text: string
-  badge?: boolean
-}
-interface ContentMenuItem {
-  text: string
-  chip?: boolean
-}
-
-const props = defineProps<{
-  dialog: boolean
-  shoppingMenu: ShoppingMenuItem[]
-  contentMenu: ContentMenuItem[]
-}>()
-
-const search = ref('')
-const onSearch = () => {
-  // 검색 동작 구현 필요시 여기에 작성
-}
-
-const tabItems = [
-  '전체', '남성', '여성', '잡화', '뷰티', '아동', '라이프', '스포츠'
-]
-const tab = ref(tabItems[0])
-
-const searchInput = ref<VTextField | null>(null)
-
-const handleScroll = () => {
-  if (searchInput.value?.$el) {
-    const input = searchInput.value.$el.querySelector('input')
-    if (input) {
-      input.blur()
+<script>
+export default {
+  name: 'FullMenuDialog',
+  
+  props: {
+    dialog: {
+      type: Boolean,
+      required: true
+    },
+    shoppingMenu: {
+      type: Array,
+      required: true
+    },
+    contentMenu: {
+      type: Array,
+      required: true
     }
+  },
+
+  data() {
+    return {
+      search: '',
+      tab: '전체',
+      tabItems: [
+        '전체', '남성', '여성', '잡화', '뷰티', '아동', '라이프', '스포츠'
+      ]
+    }
+  },
+
+  methods: {
+    onSearch() {
+      // 검색 동작 구현 필요시 여기에 작성
+    },
+
+    handleScroll() {
+      if (this.$refs.searchInput) {
+        const input = this.$refs.searchInput.$el.querySelector('input')
+        if (input) {
+          input.blur()
+        }
+      }
+    }
+  },
+
+  mounted() {
+    document.addEventListener('touchmove', this.handleScroll, { passive: true })
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('touchmove', this.handleScroll)
   }
 }
-
-onMounted(() => {
-  document.addEventListener('touchmove', handleScroll, { passive: true })
-})
-
-onUnmounted(() => {
-  document.removeEventListener('touchmove', handleScroll)
-})
 </script>
 
 <style scoped>
