@@ -2,7 +2,7 @@
   <v-dialog :value="dialog" fullscreen persistent content-class="fullscreen-dialog" @input="$emit('update:dialog', $event)">
     <template #default>
       <v-slide-x-reverse-transition>
-        <v-card v-if="dialog" class="pa-0" style="height: 100vh; overflow: hidden;">
+        <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
           <v-toolbar flat color="white">
             <v-btn icon @click="$emit('update:dialog', false)">
               <v-icon>mdi-close</v-icon>
@@ -31,7 +31,7 @@
               </v-tabs>
             </div>
           </div>
-          <v-card-text style="padding: 0; height: calc(100vh - 120px); overflow-y: auto;">
+          <v-card-text style="padding: 0;">
             <v-container fluid>
               <v-row class="white">
                 <v-col cols="12">
@@ -127,13 +127,14 @@ export default {
   z-index: 20;
   background: #fff;
 }
-
 .sticky-menu {
   border-bottom: 1px solid #eee;
 }
 
 :deep(.fullscreen-dialog) {
   background-color: white;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 :deep(.v-dialog--fullscreen) {
@@ -141,7 +142,6 @@ export default {
 }
 
 :deep(.v-card) {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 </style> 
