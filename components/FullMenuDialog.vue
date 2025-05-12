@@ -120,14 +120,23 @@ export default {
 .search-bar {
   font-size: 16px;
 }
+
 .sticky-wrap {
   position: sticky;
   top: 0;
   z-index: 20;
   background: #fff;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
+
 .sticky-menu {
   border-bottom: 1px solid #eee;
+  position: relative;
+  z-index: 21;
 }
 
 :deep(.fullscreen-dialog) {
@@ -139,6 +148,14 @@ export default {
 } */
 
 :deep(.v-card) {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+  position: relative;
+}
+
+:deep(.v-card__text) {
+  height: calc(100vh - 120px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
