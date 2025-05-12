@@ -33,7 +33,7 @@
           </div>
           <v-card-text style="padding: 0;">
             <v-container fluid>
-              <v-row>
+              <v-row class="white">
                 <v-col cols="12">
                   <v-list>
                     <v-list-item>
