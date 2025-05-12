@@ -2,7 +2,7 @@
   <v-dialog :value="dialog" fullscreen persistent content-class="fullscreen-dialog" @input="$emit('update:dialog', $event)">
     <template #default>
       <v-slide-x-reverse-transition>
-        <v-card v-if="dialog" class="pa-0 d-flex flex-column" style="height: 100vh;">
+        <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
           <v-toolbar flat color="white">
             <v-btn icon @click="$emit('update:dialog', false)">
               <v-icon>mdi-close</v-icon>
@@ -31,7 +31,7 @@
               </v-tabs>
             </div>
           </div>
-          <div class="flex-grow-1 overflow-y-auto">
+          <v-card-text style="padding: 0;">
             <v-container fluid class="pa-0">
               <v-row class="white ma-0">
                 <v-col cols="12" class="pa-0">
@@ -55,7 +55,7 @@
                 </v-col>
               </v-row>
             </v-container>
-          </div>
+          </v-card-text>
         </v-card>
       </v-slide-x-reverse-transition>
     </template>
@@ -103,24 +103,6 @@ export default {
           input.blur()
         }
       }
-    },
-
-    lockBodyScroll() {
-      document.body.style.overflow = 'hidden'
-    },
-
-    unlockBodyScroll() {
-      document.body.style.overflow = ''
-    }
-  },
-
-  watch: {
-    dialog(newVal) {
-      if (newVal) {
-        this.lockBodyScroll()
-      } else {
-        this.unlockBodyScroll()
-      }
     }
   },
 
@@ -130,7 +112,6 @@ export default {
 
   beforeDestroy() {
     document.removeEventListener('touchmove', this.handleScroll)
-    this.unlockBodyScroll()
   }
 }
 </script>
