@@ -13,6 +13,7 @@
           <div class="sticky-wrap">
             <div class="px-4 pt-2">
               <v-text-field
+                ref="searchInput"
                 v-model="search"
                 placeholder="찾으시는 브랜드를 입력해주세요."
                 variant="underlined"
@@ -62,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 interface ShoppingMenuItem {
   text: string
@@ -88,6 +89,22 @@ const tabItems = [
   '전체', '남성', '여성', '잡화', '뷰티', '아동', '라이프', '스포츠'
 ]
 const tab = ref(tabItems[0])
+
+const searchInput = ref<HTMLElement | null>(null)
+
+const handleScroll = () => {
+  if (searchInput.value) {
+    searchInput.value.blur()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
