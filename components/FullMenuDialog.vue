@@ -103,15 +103,48 @@ export default {
           input.blur()
         }
       }
+    },
+
+    preventScroll(e) {
+      e.preventDefault()
+    },
+
+    lockBodyScroll() {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.top = `-${window.scrollY}px`
+    },
+
+    unlockBodyScroll() {
+      const scrollY = document.body.style.top
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+      window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+  },
+
+  watch: {
+    dialog(newVal) {
+      if (newVal) {
+        this.lockBodyScroll()
+      } else {
+        this.unlockBodyScroll()
+      }
     }
   },
 
   mounted() {
     document.addEventListener('touchmove', this.handleScroll, { passive: true })
+    document.addEventListener('touchmove', this.preventScroll, { passive: false })
   },
 
   beforeDestroy() {
     document.removeEventListener('touchmove', this.handleScroll)
+    document.removeEventListener('touchmove', this.preventScroll)
+    this.unlockBodyScroll()
   }
 }
 </script>
