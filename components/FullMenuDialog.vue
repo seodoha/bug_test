@@ -2,7 +2,7 @@
   <v-dialog :value="dialog" fullscreen persistent content-class="fullscreen-dialog" @input="$emit('update:dialog', $event)">
     <template #default>
       <v-slide-x-reverse-transition>
-        <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
+        <v-card v-if="dialog" class="pa-0" style="height: 100vh; overflow: hidden;">
           <v-toolbar flat color="white">
             <v-btn icon @click="$emit('update:dialog', false)">
               <v-icon>mdi-close</v-icon>
@@ -31,7 +31,7 @@
               </v-tabs>
             </div>
           </div>
-          <v-card-text style="padding: 0;">
+          <v-card-text style="padding: 0; height: calc(100vh - 120px); overflow-y: auto;">
             <v-container fluid>
               <v-row class="white">
                 <v-col cols="12">
@@ -126,36 +126,21 @@ export default {
   top: 0;
   z-index: 20;
   background: #fff;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
 }
 
 .sticky-menu {
   border-bottom: 1px solid #eee;
-  position: relative;
-  z-index: 21;
 }
 
 :deep(.fullscreen-dialog) {
   background-color: white;
 }
 
-/* :deep(.v-dialog--fullscreen) {
+:deep(.v-dialog--fullscreen) {
   overflow: hidden;
-} */
-
-:deep(.v-card) {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  height: 100vh;
-  position: relative;
 }
 
-:deep(.v-card__text) {
-  height: calc(100vh - 120px);
+:deep(.v-card) {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
