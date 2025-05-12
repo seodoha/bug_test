@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="dialog" fullscreen persistent @input="$emit('update:dialog', $event)">
+  <v-dialog :value="dialog" fullscreen persistent content-class="fullscreen-dialog" @input="$emit('update:dialog', $event)">
     <template #default>
       <v-slide-x-reverse-transition>
         <v-card v-if="dialog" class="pa-0" style="height: 100vh;">
@@ -128,5 +128,18 @@ export default {
 }
 .sticky-menu {
   border-bottom: 1px solid #eee;
+}
+
+:deep(.fullscreen-dialog) {
+  background-color: white;
+}
+
+:deep(.v-dialog--fullscreen) {
+  overflow: hidden;
+}
+
+:deep(.v-card) {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style> 
