@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="text-h4 mb-4">Welcome to My App</h1>
+        <h1 class="text-h4 mb-4">Nuxt2 + Vue2 + Vuetify2 개발환경</h1>
         
         <!-- 스크롤을 위한 더미 컨텐츠 -->
         <div v-for="i in 20" :key="i" class="mb-4">
