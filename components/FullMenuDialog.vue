@@ -64,6 +64,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import type { VTextField } from 'vuetify/components'
 
 interface ShoppingMenuItem {
   text: string
@@ -90,20 +91,23 @@ const tabItems = [
 ]
 const tab = ref(tabItems[0])
 
-const searchInput = ref<HTMLElement | null>(null)
+const searchInput = ref<VTextField | null>(null)
 
 const handleScroll = () => {
-  if (searchInput.value) {
-    searchInput.value.blur()
+  if (searchInput.value?.$el) {
+    const input = searchInput.value.$el.querySelector('input')
+    if (input) {
+      input.blur()
+    }
   }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  document.addEventListener('touchmove', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('touchmove', handleScroll)
 })
 </script>
 
